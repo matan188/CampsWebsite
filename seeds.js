@@ -35,14 +35,14 @@ function seedDB() {
         if (err) {
             console.log(err);
         }
-        console.log("Campgrounds remove");
+        // console.log("Campgrounds remove");
         // Add campgrounds 
         data.forEach(function (seed) {
             Campground.create(seed, function (err, campground) {
                 if (err) {
                     console.log(err);
                 } else {
-                    console.log("added campground");
+                    // console.log("added campground");
                     // add comments
                     Comment.create(
                         {
@@ -54,7 +54,7 @@ function seedDB() {
                             } else {
                                 campground.comments.push(comment);
                                 campground.save();
-                                console.log("Created new comment");
+                                // console.log("Created new comment");
                             }
                         });
                 }
