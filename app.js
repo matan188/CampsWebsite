@@ -15,7 +15,7 @@ const indexRoutes = require('./routes/index');
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/yelp_camp', {useMongoClient: true});
-seedDb();
+// seedDb();
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
