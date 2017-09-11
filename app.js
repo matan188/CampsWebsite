@@ -153,6 +153,12 @@ app.post('/login', passport.authenticate('local',
           }), function(req, res) {
 });
 
+// Logout
+app.get('/logout', (req, res) => {
+  req.logout();
+  res.redirect('/campgrounds');
+})
+
 // Listen
 app.listen(3000, function() {
   console.log("Yelp Camp is on 3000");
