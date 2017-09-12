@@ -39,6 +39,48 @@ router.post('/campgrounds/:id/comments', isLoggedIn, (req, res) => {
     });
 });
 
+// EDIT comments
+router.get('/campgrounds/:id/comments/:commentId/edit', (req, res) => {
+    Comment.findById(req.params.commentId, (err, foundComment) => {
+        if (err) {
+            res.redirect('/campgrounds/' + req.params.id);
+        }
+        res.render('comments/edit', {campgroundId: req.params.id, comment: foundComment}); 
+    });
+});
+
+// UPDATE comments
+router.put('/campgrounds/:id/comments/:commentId', (req, res) => {
+   Comment.findByIdAndUpdate(req.params.commentId, req.body.comment, (err, foundComment) => {
+       if (err) {
+           res.redirect('/campgrounds/' + req.params.id);
+       } else {
+           res.redirect('/campgrounds/' + req.params.id);       
+       }
+   }); 
+});
+
+// DESTROY comments
+router.delete('/campgrounds/:id/comments/:commentId', (req, res) => {
+    Comment.findByIdAndRemove(req.params.commentId, (err) => {
+        if (err) {
+            res.redirect('back');
+        } else {
+            Campground.findByIdAndUpdate(req.params.id, {
+                $pull: {
+                    comments: req.params.commentId
+                }
+            }, (err) => {
+              if (err) {
+                  console.log("Couldn't remove comment from campground object", err);
+              } else {
+                  res.redirect('/campgrounds/' + req.params.id);
+              }
+            });
+        }
+    });  
+});
+
 // Middleware
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {
